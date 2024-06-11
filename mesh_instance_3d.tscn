@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6fqtegy7083b"]
+
+[ext_resource type="Texture2D" uid="uid://bkwrcvr5y6k8n" path="res://icon.svg" id="1_4ibtn"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_7xxxt"]
+size = Vector2(0.64, 0.64)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qntst"]
+shading_mode = 0
+albedo_texture = ExtResource("1_4ibtn")
+texture_filter = 0
+billboard_mode = 1
+
+[node name="MeshInstance3d" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_7xxxt")
+surface_material_override/0 = SubResource("StandardMaterial3D_qntst")
