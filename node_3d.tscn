@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://nke7umg2nvly"]
+
+[ext_resource type="Script" path="res://node_3d.gd" id="1_efnx5"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ndll0"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_fx30f"]
+sky_material = SubResource("ProceduralSkyMaterial_ndll0")
+
+[sub_resource type="Environment" id="Environment_hcvev"]
+background_mode = 2
+sky = SubResource("Sky_fx30f")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_4vhca"]
+size = Vector2(0.64, 0.64)
+
+[sub_resource type="Gradient" id="Gradient_7a7ul"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tlugc"]
+gradient = SubResource("Gradient_7a7ul")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bnnlp"]
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_tlugc")
+
+[sub_resource type="Gradient" id="Gradient_qugi0"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dljyb"]
+gradient = SubResource("Gradient_qugi0")
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_efnx5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hcvev")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 2, 4)
+
+[node name="Meshes" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Meshes"]
+mesh = SubResource("QuadMesh_4vhca")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_bnnlp")
+
+[node name="Sprites" type="Node3D" parent="."]
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="Sprites"]
+texture = SubResource("GradientTexture2D_dljyb")
+
+[node name="FPSLabel" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 64.0
+offset_bottom = 47.0
+theme_override_constants/outline_size = 4
+text = "60 FPS (16.67 mspf)"
