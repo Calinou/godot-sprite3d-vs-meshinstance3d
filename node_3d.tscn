@@ -1,6 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://nke7umg2nvly"]
+[gd_scene load_steps=7 format=3 uid="uid://nke7umg2nvly"]
 
 [ext_resource type="Script" path="res://node_3d.gd" id="1_efnx5"]
+[ext_resource type="PackedScene" uid="uid://c6fqtegy7083b" path="res://mesh_instance_3d.tscn" id="2_cy42k"]
+[ext_resource type="PackedScene" uid="uid://badfspdt7rxul" path="res://sprite_scene.tscn" id="3_781ks"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ndll0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,25 +17,10 @@ sky = SubResource("Sky_fx30f")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="QuadMesh" id="QuadMesh_4vhca"]
-size = Vector2(0.64, 0.64)
-
-[sub_resource type="Gradient" id="Gradient_7a7ul"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_tlugc"]
-gradient = SubResource("Gradient_7a7ul")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bnnlp"]
-shading_mode = 0
-albedo_texture = SubResource("GradientTexture2D_tlugc")
-
-[sub_resource type="Gradient" id="Gradient_qugi0"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_dljyb"]
-gradient = SubResource("Gradient_qugi0")
-
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_efnx5")
+mesh_instance_scene = ExtResource("2_cy42k")
+sprite3d_scene = ExtResource("3_781ks")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -47,16 +34,7 @@ transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 2, 4)
 
 [node name="Meshes" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Meshes"]
-mesh = SubResource("QuadMesh_4vhca")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_bnnlp")
-
 [node name="Sprites" type="Node3D" parent="."]
-visible = false
-
-[node name="Sprite3D" type="Sprite3D" parent="Sprites"]
-texture = SubResource("GradientTexture2D_dljyb")
 
 [node name="FPSLabel" type="Label" parent="."]
 offset_left = 24.0
@@ -65,3 +43,33 @@ offset_right = 64.0
 offset_bottom = 47.0
 theme_override_constants/outline_size = 4
 text = "60 FPS (16.67 mspf)"
+
+[node name="CountLabel" type="Label" parent="."]
+offset_left = 184.0
+offset_top = 24.0
+offset_right = 332.0
+offset_bottom = 47.0
+theme_override_constants/outline_size = 4
+text = "60 FPS (16.67 mspf)"
+
+[node name="SpawnMeshButton" type="Button" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 155.0
+grow_vertical = 0
+text = "SPAWN 1000 MESH"
+
+[node name="SpawnSpritesButton" type="Button" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 166.0
+offset_top = -31.0
+offset_right = 321.0
+grow_vertical = 0
+text = "SPAWN 1000 SPRITE"
+
+[connection signal="pressed" from="SpawnMeshButton" to="." method="_on_spawn_mesh_button_pressed"]
+[connection signal="pressed" from="SpawnSpritesButton" to="." method="_on_spawn_sprites_button_pressed"]
